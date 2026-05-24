@@ -32,7 +32,12 @@ app.get('/api/health', async (req, res) => {
 
 // ── Start server only after DB connects ─────────────────────────────────────
 const start = async () => {
-  await connectDB();
+  try {
+    await connectDB();
+  } catch (error) {
+    console.error('⚠️ Warning: Database connection failed during startup. The server will run, but database operations will fail.');
+  }
+
   app.listen(PORT, () => {
     console.log(`Server running on ${PORT}`);
   });

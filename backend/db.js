@@ -11,13 +11,13 @@ const connectDB = async () => {
   const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
   if (!uri) {
-    throw new Error('Neither MONGODB_URI nor MONGO_URI is defined in environment variables.');
+    console.warn('⚠️ Warning: Neither MONGODB_URI nor MONGO_URI is defined in environment variables. Database operations will not work.');
+    return;
   }
 
   try {
     const conn = await mongoose.connect(uri, {
-      // Mongoose 7+ uses these by default, but explicit for clarity
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s
       socketTimeoutMS: 45000,         // Close sockets after 45s of inactivity
       maxPoolSize: 10,                // Maintain up to 10 socket connections
     });
@@ -28,8 +28,7 @@ const connectDB = async () => {
     console.log(`📦 Database: ${conn.connection.name}`);
   } catch (error) {
     console.error('❌ MongoDB connection failed:', error.message);
-    // Exit process with failure so the host (e.g., Railway/Render) restarts it
-    process.exit(1);
+    throw error;
   }
 };
 
