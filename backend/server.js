@@ -7,8 +7,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ── Middleware ──────────────────────────────────────────────────────────────
+const rawFrontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+let frontendOrigin = rawFrontendUrl.trim();
+try {
+  const urlObj = new URL(frontendOrigin);
+  frontendOrigin = urlObj.origin;
+} catch (e) {
+  // Keep original if it doesn't parse as a standard URL
+}
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: frontendOrigin,
   credentials: true,
 }));
 app.use(express.json());
