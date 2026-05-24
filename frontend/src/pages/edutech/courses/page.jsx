@@ -22,7 +22,7 @@ export default function CoursesPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Courses...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Courses...</div>;
   }
 
   return (/*#__PURE__*/
@@ -31,7 +31,7 @@ export default function CoursesPage() {
       _jsx("div", { className: "pt-24 pb-20", children: /*#__PURE__*/
         _jsxs("div", { className: "px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto", children: [/*#__PURE__*/
           _jsxs("div", { className: "mb-12", children: [/*#__PURE__*/
-            _jsxs("h1", { className: "text-4xl font-black tracking-tighter text-white mb-4", children: ["Our ", /*#__PURE__*/_jsx("span", { className: "text-primary", children: "Courses" })] }), /*#__PURE__*/
+            _jsxs("h1", { className: "text-4xl font-black tracking-tighter text-foreground mb-4", children: ["Our ", /*#__PURE__*/_jsx("span", { className: "text-primary", children: "Courses" })] }), /*#__PURE__*/
             _jsx("p", { className: "text-gray-400 max-w-2xl", children: "Explore our full curriculum of professional certifications and hands-on technical trainings." }
 
             )] }

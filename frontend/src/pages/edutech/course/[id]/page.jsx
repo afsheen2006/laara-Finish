@@ -38,7 +38,7 @@ export default function CourseDetailPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-foreground p-8">Loading Course Detail...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Course Detail...</div>;
   }
 
   if (!session) {

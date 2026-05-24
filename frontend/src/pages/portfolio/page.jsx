@@ -23,7 +23,7 @@ export default function PortfolioPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Portfolio...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Portfolio...</div>;
   }
 
   return (/*#__PURE__*/

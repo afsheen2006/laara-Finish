@@ -32,7 +32,7 @@ export default function EdutechPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Edutech...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Edutech...</div>;
   }
 
   return (/*#__PURE__*/

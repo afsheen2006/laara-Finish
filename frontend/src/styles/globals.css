@@ -191,9 +191,12 @@ html, body {
 /* ── Hero Section ─────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
   #home {
-    min-height: 100svh;
-    padding-top: 5rem;
-    align-items: flex-start;
+    min-height: 55svh !important;
+    padding-top: 7rem !important;
+    padding-bottom: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   /* Drone 3D canvas sits behind hero text on mobile */

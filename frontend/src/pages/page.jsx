@@ -73,7 +73,7 @@ export default function Home() {
     });
   }, []);
 
-  if (loading) return <div className="min-h-screen bg-background text-white p-8">Loading Laara Innovations...</div>;
+  if (loading) return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Laara Innovations...</div>;
 
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "MASTER";
 

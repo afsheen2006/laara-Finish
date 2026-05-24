@@ -13,6 +13,7 @@ import Edutech from './pages/edutech/page.jsx';
 import EdutechCourses from './pages/edutech/courses/page.jsx';
 import EdutechCourseDetail from './pages/edutech/course/[id]/page.jsx';
 import Events from './pages/events/page.jsx';
+import EventDetail from './pages/events/[id]/page.jsx';
 import Help from './pages/help/page.jsx';
 import Login from './pages/login/page.jsx';
 import Portfolio from './pages/portfolio/page.jsx';
@@ -37,6 +38,7 @@ function App() {
         <Route path="/edutech/courses" element={<EdutechCourses />} />
         <Route path="/edutech/course/:id" element={<EdutechCourseDetail />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/help" element={<Help />} />
         <Route path="/login" element={<Login />} />
         <Route path="/portfolio" element={<Portfolio />} />

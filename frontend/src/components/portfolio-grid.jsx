@@ -107,7 +107,7 @@ export function PortfolioGrid() {
   }
 
   return (/*#__PURE__*/
-    _jsxs("div", { className: "py-20 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto", children: [/*#__PURE__*/
+    _jsxs("div", { className: "py-12 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto", children: [/*#__PURE__*/
 
       _jsxs("div", { className: "text-center mb-16", children: [/*#__PURE__*/
         _jsxs(motion.div, {

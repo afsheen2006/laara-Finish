@@ -23,7 +23,7 @@ export default function PrivacyPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Privacy Policy...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Privacy Policy...</div>;
   }
   return (/*#__PURE__*/
     _jsxs("main", { className: "min-h-screen bg-background text-foreground", children: [/*#__PURE__*/

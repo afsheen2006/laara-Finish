@@ -26,7 +26,7 @@ export default function SoftwarePage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Products Page...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Products Page...</div>;
   }
 
   return (/*#__PURE__*/
@@ -53,7 +53,7 @@ export default function SoftwarePage() {
       ), /*#__PURE__*/
 
 
-      _jsx("section", { className: "py-16 px-4 sm:px-6 lg:px-8", children: /*#__PURE__*/
+      _jsx("section", { className: "py-10 sm:py-16 px-4 sm:px-6 lg:px-8", children: /*#__PURE__*/
         _jsxs("div", { className: "mx-auto max-w-7xl", children: [/*#__PURE__*/
           _jsxs("div", { className: "text-center mb-12", children: [/*#__PURE__*/
             _jsx("h2", { className: "text-2xl sm:text-3xl font-bold text-foreground mb-4", children: "Featured Projects" }
@@ -68,7 +68,7 @@ export default function SoftwarePage() {
       ), /*#__PURE__*/
 
 
-      _jsx("section", { className: "py-16 px-4 sm:px-6 lg:px-8 bg-card/50", children: /*#__PURE__*/
+      _jsx("section", { className: "py-10 sm:py-16 px-4 sm:px-6 lg:px-8 bg-card/50", children: /*#__PURE__*/
         _jsxs("div", { className: "mx-auto max-w-7xl", children: [/*#__PURE__*/
           _jsxs("div", { className: "text-center mb-12", children: [/*#__PURE__*/
             _jsx("h2", { className: "text-2xl sm:text-3xl font-bold text-foreground mb-4", children: "Services & Pricing" }
@@ -83,7 +83,7 @@ export default function SoftwarePage() {
       ), /*#__PURE__*/
 
 
-      _jsx("section", { className: "py-16 px-4 sm:px-6 lg:px-8", children: /*#__PURE__*/
+      _jsx("section", { className: "py-10 sm:py-16 px-4 sm:px-6 lg:px-8", children: /*#__PURE__*/
         _jsxs("div", { className: "mx-auto max-w-3xl", children: [/*#__PURE__*/
           _jsxs("div", { className: "text-center mb-12", children: [/*#__PURE__*/
             _jsx("h2", { className: "text-2xl sm:text-3xl font-bold text-foreground mb-4", children: "Start Your Project" }

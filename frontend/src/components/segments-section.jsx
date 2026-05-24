@@ -55,7 +55,7 @@ const itemVariants = {
 
 export function SegmentsSection() {
   return (/*#__PURE__*/
-    _jsx("section", { className: "relative py-20 border-t border-border/50", children: /*#__PURE__*/
+    _jsx("section", { className: "relative py-12 sm:py-20 border-t border-border/50", children: /*#__PURE__*/
       _jsxs("div", { className: "mx-auto max-w-6xl px-4 sm:px-6 lg:px-8", children: [/*#__PURE__*/
         _jsx(motion.div, {
           initial: { opacity: 0, y: 20 },

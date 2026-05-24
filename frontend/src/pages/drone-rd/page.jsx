@@ -39,7 +39,7 @@ export default function DroneRDPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Research Page...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Research Page...</div>;
   }
 
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "MASTER";
@@ -119,17 +119,7 @@ export default function DroneRDPage() {
       <Navigation customLinks={navLinks} config={config} />
 
       <section className="pt-24 pb-12 px-4 sm:px-6 lg:px-8 relative group/research">
-        {isAdmin && (
-          <LiveCMSOverlay
-            blockType="RESEARCH_PAGE"
-            blockTitle="Research Page Header"
-            blockId={researchBlock?._id || researchBlock?.id}
-            initialContent={researchContent}
-            fields={researchFields}
-            onSave={refreshPageData}
-            buttonLabel="Edit Research Header"
-          />
-        )}
+
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6">
@@ -154,7 +144,7 @@ export default function DroneRDPage() {
         </div>
       </section>
 
-      <section id="milestones" className="py-16 px-4 sm:px-6 lg:px-8">
+      <section id="milestones" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Project Milestones</h2>

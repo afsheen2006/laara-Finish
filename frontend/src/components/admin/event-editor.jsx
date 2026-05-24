@@ -82,6 +82,7 @@ export function EventEditor({ eventsBlock, onSave }) {
       date: "TBD",
       location: "Virtual / TBD",
       description: "Event description goes here...",
+      detailedDescription: "",
       type: "Conference",
       image: ""
     }]
@@ -181,12 +182,22 @@ export function EventEditor({ eventsBlock, onSave }) {
                 )] }
               ), /*#__PURE__*/
 
-              _jsxs("div", { className: "space-y-2", children: [/*#__PURE__*/
-                _jsx("label", { className: "text-[10px] font-bold text-gray-500 uppercase tracking-widest", children: "Description" }), /*#__PURE__*/
+              _jsxs("div", { className: "space-y-2", children: [
+                _jsx("label", { className: "text-[10px] font-bold text-gray-500 uppercase tracking-widest", children: "Short Description" }), /*#__PURE__*/
                 _jsx(Textarea, {
                   value: event.description,
                   onChange: (e) => updateEvent(event.id, { description: e.target.value }),
-                  className: "bg-white/5 border-white/10 rounded-xl min-h-[100px]" }
+                  className: "bg-white/5 border-white/10 rounded-xl min-h-[80px]" }
+                )] }
+              ), /*#__PURE__*/
+
+              _jsxs("div", { className: "space-y-2", children: [
+                _jsx("label", { className: "text-[10px] font-bold text-gray-500 uppercase tracking-widest", children: "Detailed Description" }), /*#__PURE__*/
+                _jsx(Textarea, {
+                  value: event.detailedDescription || "",
+                  onChange: (e) => updateEvent(event.id, { detailedDescription: e.target.value }),
+                  placeholder: "Add rich description / details / agenda about this event here...",
+                  className: "bg-white/5 border-white/10 rounded-xl min-h-[140px]" }
                 )] }
               )] }
             ), /*#__PURE__*/

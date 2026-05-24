@@ -46,7 +46,7 @@ export function HeroSection({ content = {} }) {
   return (
     <section
       id="home"
-      className="relative min-h-screen bg-background text-foreground overflow-hidden flex items-center"
+      className="relative pt-28 pb-8 sm:min-h-screen bg-background text-foreground overflow-hidden sm:flex sm:items-center sm:pt-0 sm:pb-0"
     >
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -58,7 +58,7 @@ export function HeroSection({ content = {} }) {
         <div className="w-full h-full relative">
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent z-0" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background z-0" />
-          <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto bg-[radial-gradient(circle_at_center,rgba(0,168,128,0.06)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(21,229,196,0.03)_0%,transparent_70%)]">
+          <div className="absolute inset-0 w-full h-full z-10 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(0,168,128,0.06)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(21,229,196,0.03)_0%,transparent_70%)]">
             <Suspense fallback={null}>
               <DroneViewer mouse={mouse} isHero={true} />
             </Suspense>
@@ -72,10 +72,10 @@ export function HeroSection({ content = {} }) {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-4xl"
+          className="max-w-4xl mx-auto sm:mx-0"
         >
-          <motion.h1 className="font-black tracking-[-0.02em] leading-none text-left flex flex-col font-oxanium">
-            <span className="inline-block pb-6 pt-2 pr-6 sm:pr-10 text-4xl sm:text-7xl md:text-9xl lg:text-[10rem]">
+          <motion.h1 className="font-black tracking-[-0.02em] leading-none text-center sm:text-left flex flex-col items-center sm:items-start font-oxanium">
+            <span className="inline-block pb-2 sm:pb-6 pt-1 sm:pt-2 pr-2 sm:pr-10 text-3xl sm:text-7xl md:text-9xl lg:text-[10rem] whitespace-nowrap">
               {title1.split("").map((char, i) => (
                 <motion.span
                   key={i}
@@ -93,7 +93,7 @@ export function HeroSection({ content = {} }) {
               ))}
             </span>
 
-            <span className="inline-block pb-6 pt-2 pr-6 sm:pr-10 relative whitespace-nowrap text-2xl sm:text-5xl md:text-7xl lg:text-[7rem]">
+            <span className="inline-block pb-2 sm:pb-6 pt-1 sm:pt-2 pr-2 sm:pr-10 relative text-xl sm:text-5xl md:text-7xl lg:text-[7rem] whitespace-nowrap">
               {title2.split("").map((char, i) => (
                 <motion.span
                   key={i}
@@ -121,7 +121,7 @@ export function HeroSection({ content = {} }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.8, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         aria-label="Scroll down"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 group cursor-pointer pointer-events-auto"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 hidden sm:flex flex-col items-center gap-2 group cursor-pointer pointer-events-auto"
       >
         {/* Label */}
         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground group-hover:text-primary transition-colors duration-300">

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useSession } from "@/lib/auth-store";
+import { useSession, signOut } from "@/lib/auth-store";
 import { UserAccountNav } from "./user-account-nav";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -51,8 +51,7 @@ export function Navigation({ customLinks, config }) {
     visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
   };
 
-  const isAuthenticated =
-    status === "authenticated" && session?.user?.provider === "google";
+  const isAuthenticated = status === "authenticated";
 
   return (
     <>
@@ -181,7 +180,7 @@ export function Navigation({ customLinks, config }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:hidden absolute top-full left-0 right-0 border-t border-border/50 p-4 space-y-4 shadow-2xl shadow-black/30 bg-card/95 backdrop-blur-2xl"
+              className="lg:hidden absolute top-full left-0 right-0 border-t border-border/50 p-4 space-y-4 shadow-2xl shadow-black/30 bg-card/95 backdrop-blur-2xl max-h-[calc(100vh-80px)] overflow-y-auto"
             >
               {/* Theme row */}
               <div className="flex items-center justify-between px-4 mb-2">
@@ -207,24 +206,44 @@ export function Navigation({ customLinks, config }) {
 
               {/* Auth footer */}
               <div className="pt-4 border-t border-border/50 flex flex-col gap-3">
-                {isAuthenticated ? (
-                  <div className="flex items-center justify-between px-4 py-3 bg-primary/5 rounded-xl border border-primary/10">
-                    <div className="flex items-center gap-3">
+                {isAuthenticated && session?.user ? (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-3 px-4 py-3 bg-primary/5 rounded-xl border border-primary/10">
                       <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-lg border border-primary/30">
                         {session?.user?.name?.[0] ||
                           session?.user?.email?.[0] ||
                           "?"}
                       </div>
-                      <div>
-                        <div className="text-sm font-bold text-foreground">
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-bold text-foreground truncate">
                           {session?.user?.name || "User"}
                         </div>
-                        <div className="text-xs text-muted-foreground truncate max-w-[160px]">
+                        <div className="text-xs text-muted-foreground truncate">
                           {session?.user?.email}
                         </div>
                       </div>
                     </div>
-                    <UserAccountNav />
+                    {(session.user.role === "ADMIN" || session.user.role === "MASTER") && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full"
+                      >
+                        <Button variant="outline" className="w-full border-primary/20 text-primary hover:bg-primary/10 rounded-xl py-5 text-sm font-bold">
+                          Admin Dashboard
+                        </Button>
+                      </Link>
+                    )}
+                    <Button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        signOut();
+                      }}
+                      variant="outline"
+                      className="w-full border-red-500/20 text-red-500 hover:bg-red-500/10 rounded-xl py-5 text-sm font-bold"
+                    >
+                      Log Out
+                    </Button>
                   </div>
                 ) : (
                   <Link

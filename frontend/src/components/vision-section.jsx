@@ -40,7 +40,7 @@ export function VisionSection({ content = {} }) {
   };
 
   return (
-    <section id="vision" className="relative py-24 border-t border-border/30 overflow-hidden">
+    <section id="vision" className="relative pt-6 pb-12 sm:py-24 border-t border-border/30 overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
       

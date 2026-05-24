@@ -22,7 +22,7 @@ export default function Careers() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Careers...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Careers...</div>;
   }
 
   return /*#__PURE__*/_jsx(CareersPage, { navLinks: navLinks, config: config });

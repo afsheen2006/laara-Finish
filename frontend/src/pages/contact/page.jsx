@@ -23,7 +23,7 @@ export default function ContactPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading Contact Page...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Contact Page...</div>;
   }
 
   return (/*#__PURE__*/

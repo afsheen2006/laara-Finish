@@ -8,10 +8,10 @@ const connectDB = async () => {
     return;
   }
 
-  const uri = process.env.MONGODB_URI;
+  const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
   if (!uri) {
-    throw new Error('MONGODB_URI is not defined in environment variables.');
+    throw new Error('Neither MONGODB_URI nor MONGO_URI is defined in environment variables.');
   }
 
   try {

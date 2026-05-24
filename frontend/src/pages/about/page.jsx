@@ -74,7 +74,7 @@ export default function AboutPage() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-background text-white p-8">Loading About Page...</div>;
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading About Page...</div>;
   }
 
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "MASTER";
@@ -191,7 +191,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="py-20 bg-white/5 border-y border-white/5 px-4 sm:px-6 lg:px-8">
+        <section className="py-12 sm:py-20 bg-white/5 border-y border-white/5 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <AboutCard
               icon={<Target className="text-primary" />}
