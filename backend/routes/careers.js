@@ -52,7 +52,7 @@ async function ensureDefaultCareers() {
 }
 
 // Seed careers once on backend startup
-ensureDefaultCareers();
+// ensureDefaultCareers();
 
 // GET /api/careers - Fetch all career listings
 router.get('/', async (req, res) => {

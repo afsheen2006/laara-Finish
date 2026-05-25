@@ -1,12 +1,16 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Send, CheckCircle2, Loader2, User, Mail, Building2, MessageSquare } from "lucide-react";
+import { Send, CheckCircle2, Loader2, User, Mail, Building2, MessageSquare, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import apiClient from "@/lib/api-client";
+import { useSession } from "@/lib/auth-store";
+import { useNavigate } from "react-router-dom";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 
 export function ContactForm() {
+  const { status } = useSession();
+  const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,6 +18,10 @@ export function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (status !== "authenticated") {
+      toast.error("You must be signed in to submit an enquiry.");
+      return;
+    }
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
@@ -160,6 +168,30 @@ export function ContactForm() {
             </p>
           </div>
         </form>
+      )}
+
+      {status !== "authenticated" && (
+        <div className="absolute inset-0 bg-background/60 backdrop-blur-[6px] flex flex-col items-center justify-center z-20 p-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-md space-y-6 flex flex-col items-center"
+          >
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 border border-primary/20 shadow-[0_0_20px_rgba(0,224,170,0.1)] mb-2">
+              <Lock className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold text-foreground font-mono">Sign In Required</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              You must be signed in to submit a message enquiry. Please sign in to contact our team.
+            </p>
+            <Button
+              onClick={() => navigate("/login")}
+              className="bg-primary text-black font-bold hover:bg-primary/90 shadow-lg shadow-primary/20 rounded-full px-8 py-5 transition-all hover:scale-105"
+            >
+              Sign In to Continue
+            </Button>
+          </motion.div>
+        </div>
       )}
     </motion.div>
   );
