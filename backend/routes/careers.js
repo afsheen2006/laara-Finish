@@ -27,32 +27,31 @@ const upload = multer({ storage: storage });
 
 // ── PUBLIC ROUTES ──────────────────────────────────────────────────────────
 
-// Helper to seed default careers
-async function ensureDefaultCareers() {
+// Clean up default careers if they were seeded in the past
+async function removeDefaultCareers() {
   try {
-    const count = await Career.countDocuments();
-    if (count === 0) {
-      await Career.insertMany([
+    const result = await Career.deleteMany({
+      $or: [
         {
           title: "Full Stack Web Developer",
-          deadline: "2026-06-30",
           description: "We are looking for a passionate MERN stack developer to build and scale interactive landing pages, dashboards, and database integrations. Experience with React, Node.js, and state management is a plus."
         },
         {
           title: "Drone Hardware Engineer",
-          deadline: "2026-07-15",
           description: "Join our R&D lab to prototype advanced carbon-fiber drone structures and optimize computational aerodynamics. Experience with CFD simulation, carbon compositing, and circuit design is required."
         }
-      ]);
-      console.log('Seeded default careers successfully.');
+      ]
+    });
+    if (result.deletedCount > 0) {
+      console.log(`Successfully removed ${result.deletedCount} default seeded careers from the database.`);
     }
   } catch (err) {
-    console.error("Failed to seed default careers:", err);
+    console.error("Failed to remove default careers:", err);
   }
 }
 
-// Seed careers once on backend startup
-// ensureDefaultCareers();
+// Clean up default careers once on backend startup
+removeDefaultCareers();
 
 // GET /api/careers - Fetch all career listings
 router.get('/', async (req, res) => {
