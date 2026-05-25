@@ -48,6 +48,7 @@ export default function EventsPage() {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     // Check admin status
     try {
       const raw = localStorage.getItem("user");

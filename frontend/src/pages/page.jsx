@@ -65,6 +65,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     Promise.all([getBlocks(), getNavLinks(), getSystemConfig()]).then(([b, n, c]) => {
       setBlocks(b);
       setNavLinks(n);

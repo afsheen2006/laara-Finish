@@ -27,6 +27,7 @@ export default function DroneRDPage() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     Promise.all([
       getNavLinks(),
       getSystemConfig(),

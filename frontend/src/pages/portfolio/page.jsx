@@ -11,6 +11,7 @@ export default function PortfolioPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     Promise.all([
       getNavLinks(),
       getSystemConfig()
