@@ -1,5 +1,11 @@
 import { Navigation } from "@/components/navigation";
 import { getNavLinks, getSystemConfig } from "@/lib/cms-helpers";
+import { CourseCatalog } from "@/components/edutech/course-catalog";
+import { StudentDashboard } from "@/components/edutech/student-dashboard";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useState, useEffect } from "react";
+import { Loader2 } from "lucide-react";
+
 const auth = async () => {
   try {
     const userStr = localStorage.getItem("user");
@@ -7,10 +13,6 @@ const auth = async () => {
   } catch (e) {}
   return null;
 };
-import { CourseCatalog } from "@/components/edutech/course-catalog";
-import { StudentDashboard } from "@/components/edutech/student-dashboard";import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-
-import { useState, useEffect } from "react";
 
 export default function EdutechPage() {
   const [navLinks, setNavLinks] = useState([]);
@@ -31,21 +33,22 @@ export default function EdutechPage() {
     });
   }, []);
 
-  if (loading) {
-    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Edutech...</div>;
-  }
-
-  return (/*#__PURE__*/
+  return (
     _jsxs("main", { className: "min-h-screen bg-background", children: [
-      !session && /*#__PURE__*/_jsx(Navigation, { customLinks: navLinks, config: config }), /*#__PURE__*/
+      !session && _jsx(Navigation, { customLinks: navLinks, config: config, loading: loading }),
 
       _jsx("div", { className: session ? "" : "pt-24", children:
-        session ? /*#__PURE__*/
-        _jsx(StudentDashboard, {}) : /*#__PURE__*/
-
-        _jsx(CourseCatalog, {}) }
-
-      )] }
-    ));
-
+        loading ? (
+          <div className="flex flex-col items-center justify-center py-40 select-none">
+            <Loader2 className="w-10 h-10 animate-spin text-primary mb-4" />
+            <span className="text-sm font-semibold tracking-widest text-muted-foreground animate-pulse uppercase">Verifying Session...</span>
+          </div>
+        ) : session ? (
+          _jsx(StudentDashboard, {})
+        ) : (
+          _jsx(CourseCatalog, {})
+        )
+      })
+    ] })
+  );
 }

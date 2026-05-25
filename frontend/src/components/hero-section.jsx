@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import React, { Suspense, lazy } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 
 const DroneViewer = lazy(() =>
   import("./drone-viewer").then((mod) => ({ default: mod.DroneViewer }))
 );
 
-export function HeroSection({ content = {} }) {
+export function HeroSection({ content = {}, loading = false }) {
   const title1 = content.title1 || "LAARA";
   const title2 = content.title2 || "INNOVATIONS";
 
@@ -68,50 +68,57 @@ export function HeroSection({ content = {} }) {
 
       {/* Hero text */}
       <div className="relative z-20 container mx-auto px-6 sm:px-10 lg:px-24 pointer-events-none">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-4xl mx-auto sm:mx-0"
-        >
-          <motion.h1 className="font-black tracking-[-0.02em] leading-none text-center sm:text-left flex flex-col items-center sm:items-start font-oxanium">
-            <span className="inline-block pb-2 sm:pb-6 pt-1 sm:pt-2 pr-2 sm:pr-10 text-3xl sm:text-7xl md:text-9xl lg:text-[10rem] whitespace-nowrap">
-              {title1.split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }}
-                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                  transition={{
-                    duration: 0.8,
-                    delay: i * 0.05,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="inline-block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent px-1"
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </span>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center min-h-[300px] w-full text-center sm:text-left sm:items-start select-none">
+            <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
+            <span className="text-sm font-semibold tracking-widest text-muted-foreground animate-pulse uppercase">Syncing Live Hero Section...</span>
+          </div>
+        ) : (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-4xl mx-auto sm:mx-0"
+          >
+            <motion.h1 className="font-black tracking-[-0.02em] leading-none text-center sm:text-left flex flex-col items-center sm:items-start font-oxanium">
+              <span className="inline-block pb-2 sm:pb-6 pt-1 sm:pt-2 pr-2 sm:pr-10 text-3xl sm:text-7xl md:text-9xl lg:text-[10rem] whitespace-nowrap">
+                {title1.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }}
+                    animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 0.8,
+                      delay: i * 0.05,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="inline-block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent px-1"
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </span>
 
-            <span className="inline-block pb-2 sm:pb-6 pt-1 sm:pt-2 pr-2 sm:pr-10 relative text-xl sm:text-5xl md:text-7xl lg:text-[7rem] whitespace-nowrap">
-              {title2.split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }}
-                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.3 + i * 0.05,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="inline-block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(21,229,196,0.3)] px-1"
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </span>
-          </motion.h1>
-        </motion.div>
+              <span className="inline-block pb-2 sm:pb-6 pt-1 sm:pt-2 pr-2 sm:pr-10 relative text-xl sm:text-5xl md:text-7xl lg:text-[7rem] whitespace-nowrap">
+                {title2.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }}
+                    animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.3 + i * 0.05,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="inline-block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(21,229,196,0.3)] px-1"
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </span>
+            </motion.h1>
+          </motion.div>
+        )}
       </div>
 
       {/* ── Scroll Down Indicator ──────────────────────────────────────────── */}

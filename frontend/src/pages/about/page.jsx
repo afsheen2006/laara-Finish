@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Target, Users, Zap, Globe } from "lucide-react";
+import { Target, Users, Zap, Globe, Loader2 } from "lucide-react";
 import { AnimatedCounter } from "@/components/animated-counter";
 import { OdometerCounter } from "@/components/odometer-counter";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
@@ -73,10 +73,6 @@ export default function AboutPage() {
     });
   }, []);
 
-  if (loading) {
-    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading About Page...</div>;
-  }
-
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "MASTER";
 
   // About Mission Block
@@ -122,7 +118,7 @@ export default function AboutPage() {
         </div>
       )}
 
-      <Navigation customLinks={navLinks} config={config} />
+      <Navigation customLinks={navLinks} config={config} loading={loading} />
 
       <div className="pt-24 sm:pt-32 pb-16 sm:pb-20">
         <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-16 sm:mb-32 relative group/about">
@@ -139,56 +135,63 @@ export default function AboutPage() {
             />
           )}
 
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-primary">{aboutContent.subtitle || "Our Company"}</span>
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 min-h-[300px] max-w-3xl">
+              <Loader2 className="w-10 h-10 animate-spin text-primary mb-4" />
+              <span className="text-sm font-semibold tracking-widest text-muted-foreground animate-pulse uppercase">Syncing company information...</span>
             </div>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 sm:mb-8 text-glow">
-              {(aboutContent.title || "About Us").split(" ").map((word, i) => {
-                if (i === (aboutContent.title || "About Us").split(" ").length - 1) {
-                  return <span key={i} className="text-primary ml-1">{word}</span>;
-                }
-                return <span key={i}>{word} </span>;
-              })}
-            </h1>
-            
-            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-muted-foreground">{aboutContent.missionTitle || "Our Mission"}</h2>
-            <p className="text-base sm:text-xl text-muted-foreground leading-relaxed mb-8 sm:mb-12">{aboutContent.desc || ""}</p>
-            
-            <div className="relative group/counters p-6 border border-transparent hover:border-primary/20 rounded-3xl transition-all duration-300 bg-white/[0.01]">
-              {isAdmin && (
-                <LiveCMSOverlay
-                  blockType="SYSTEM_CONFIG"
-                  blockTitle="Counters Configuration"
-                  blockId={systemConfigBlock?._id || systemConfigBlock?.id}
-                  initialContent={systemConfigContent}
-                  fields={[
-                    { key: "yearsOfExperience", label: "Years of Experience", type: "number", defaultValue: 3 },
-                    { key: "clientCountLimit", label: "Global Clients Limit", type: "number", defaultValue: 120 },
-                  ]}
-                  onSave={refreshPageData}
-                  buttonLabel="Edit Counters"
-                />
-              )}
+          ) : (
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-primary">{aboutContent.subtitle || "Our Company"}</span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 sm:mb-8 text-glow">
+                {(aboutContent.title || "About Us").split(" ").map((word, i) => {
+                  if (i === (aboutContent.title || "About Us").split(" ").length - 1) {
+                    return <span key={i} className="text-primary ml-1">{word}</span>;
+                  }
+                  return <span key={i}>{word} </span>;
+                })}
+              </h1>
+              
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-muted-foreground">{aboutContent.missionTitle || "Our Mission"}</h2>
+              <p className="text-base sm:text-xl text-muted-foreground leading-relaxed mb-8 sm:mb-12">{aboutContent.desc || ""}</p>
+              
+              <div className="relative group/counters p-6 border border-transparent hover:border-primary/20 rounded-3xl transition-all duration-300 bg-white/[0.01]">
+                {isAdmin && (
+                  <LiveCMSOverlay
+                    blockType="SYSTEM_CONFIG"
+                    blockTitle="Counters Configuration"
+                    blockId={systemConfigBlock?._id || systemConfigBlock?.id}
+                    initialContent={systemConfigContent}
+                    fields={[
+                      { key: "yearsOfExperience", label: "Years of Experience", type: "number", defaultValue: 3 },
+                      { key: "clientCountLimit", label: "Global Clients Limit", type: "number", defaultValue: 120 },
+                    ]}
+                    onSave={refreshPageData}
+                    buttonLabel="Edit Counters"
+                  />
+                )}
 
-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 sm:gap-12">
-                <div>
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    <AnimatedCounter value={parseInt(systemConfigContent?.yearsOfExperience, 10) || 3} suffix="+" />
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 sm:gap-12">
+                  <div>
+                    <div className="text-4xl font-bold text-primary mb-2">
+                      <AnimatedCounter value={parseInt(systemConfigContent?.yearsOfExperience, 10) || 3} suffix="+" />
+                    </div>
+                    <div className="text-sm text-gray-500 uppercase tracking-widest font-bold">Years Experience</div>
                   </div>
-                  <div className="text-sm text-gray-500 uppercase tracking-widest font-bold">Years Experience</div>
-                </div>
-                
-                <div>
-                  <div className="text-4xl font-bold text-secondary mb-2">
-                    <OdometerCounter value={parseInt(systemConfigContent?.clientCountLimit, 10) || 120} suffix="+" />
+                  
+                  <div>
+                    <div className="text-4xl font-bold text-secondary mb-2">
+                      <OdometerCounter value={parseInt(systemConfigContent?.clientCountLimit, 10) || 120} suffix="+" />
+                    </div>
+                    <div className="text-sm text-gray-500 uppercase tracking-widest font-bold">Global Clients</div>
                   </div>
-                  <div className="text-sm text-gray-500 uppercase tracking-widest font-bold">Global Clients</div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </section>
 
         <section className="py-12 sm:py-20 bg-white/5 border-y border-white/5 px-4 sm:px-6 lg:px-8">

@@ -9,6 +9,7 @@ import { useSession } from "@/lib/auth-store";
 import { LiveCMSOverlay } from "@/components/admin/live-cms-overlay";
 import apiClient from "@/lib/api-client";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export default function DroneRDPage() {
   const [blocks, setBlocks] = useState([]);
@@ -37,10 +38,6 @@ export default function DroneRDPage() {
       setLoading(false);
     });
   }, []);
-
-  if (loading) {
-    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Research Page...</div>;
-  }
 
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "MASTER";
 
@@ -116,21 +113,29 @@ export default function DroneRDPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <Navigation customLinks={navLinks} config={config} />
+      <Navigation customLinks={navLinks} config={config} loading={loading} />
 
       <section className="pt-24 pb-12 px-4 sm:px-6 lg:px-8 relative group/research">
-
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6">
-              <span className="text-sm font-medium text-primary">{researchContent.subtitle || "R&D Division"}</span>
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6 text-balance">
-              {renderFormattedTitle(researchContent.title || "Propeller [Innovation]")}
-            </h1>
-            <p className="max-w-2xl mx-auto text-lg text-muted-foreground text-pretty">
-              {researchContent.desc || "Pushing the boundaries of drone propulsion through computational design, advanced materials science, and rigorous aerodynamic testing."}
-            </p>
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 min-h-[300px]">
+                <Loader2 className="w-10 h-10 animate-spin text-primary mb-4" />
+                <span className="text-sm font-semibold tracking-widest text-muted-foreground animate-pulse uppercase">Syncing R&D information...</span>
+              </div>
+            ) : (
+              <>
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6">
+                  <span className="text-sm font-medium text-primary">{researchContent.subtitle || "R&D Division"}</span>
+                </span>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6 text-balance">
+                  {renderFormattedTitle(researchContent.title || "Propeller [Innovation]")}
+                </h1>
+                <p className="max-w-2xl mx-auto text-lg text-muted-foreground text-pretty">
+                  {researchContent.desc || "Pushing the boundaries of drone propulsion through computational design, advanced materials science, and rigorous aerodynamic testing."}
+                </p>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -139,7 +144,14 @@ export default function DroneRDPage() {
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             <DroneShowcase />
-            <ResearchRepository papers={initialPapers} isAdmin={isAdmin} onSave={handleSavePapers} />
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-12 bg-card border border-border rounded-[2rem] min-h-[300px] w-full">
+                <Loader2 className="w-8 h-8 animate-spin text-primary mb-2" />
+                <span className="text-xs text-muted-foreground animate-pulse">Syncing research papers...</span>
+              </div>
+            ) : (
+              <ResearchRepository papers={initialPapers} isAdmin={isAdmin} onSave={handleSavePapers} />
+            )}
           </div>
         </div>
       </section>
@@ -150,7 +162,14 @@ export default function DroneRDPage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Project Milestones</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">Track our research progress from concept to prototype</p>
           </div>
-          <ProjectTimeline milestones={initialMilestones} isAdmin={isAdmin} onSave={handleSaveMilestones} />
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-12 min-h-[200px] w-full">
+              <Loader2 className="w-8 h-8 animate-spin text-secondary mb-2" />
+              <span className="text-xs text-muted-foreground animate-pulse">Syncing milestones...</span>
+            </div>
+          ) : (
+            <ProjectTimeline milestones={initialMilestones} isAdmin={isAdmin} onSave={handleSaveMilestones} />
+          )}
         </div>
       </section>
     </main>

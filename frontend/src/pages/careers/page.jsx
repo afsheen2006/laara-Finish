@@ -1,9 +1,9 @@
 import { getNavLinks, getSystemConfig } from "@/lib/cms-helpers";
-import CareersPage from "./careers-page";import { jsx as _jsx } from "react/jsx-runtime";
+import CareersPage from "./careers-page";
+import { jsx as _jsx } from "react/jsx-runtime";
+import { useState, useEffect } from "react";
 
 export const dynamic = "force-dynamic";
-
-import { useState, useEffect } from "react";
 
 export default function Careers() {
   const [navLinks, setNavLinks] = useState([]);
@@ -21,9 +21,5 @@ export default function Careers() {
     });
   }, []);
 
-  if (loading) {
-    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Careers...</div>;
-  }
-
-  return /*#__PURE__*/_jsx(CareersPage, { navLinks: navLinks, config: config });
+  return /*#__PURE__*/_jsx(CareersPage, { navLinks: navLinks, config: config, loadingConfig: loading });
 }

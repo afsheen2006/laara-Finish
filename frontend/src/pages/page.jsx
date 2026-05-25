@@ -73,8 +73,6 @@ export default function Home() {
     });
   }, []);
 
-  if (loading) return <div className="min-h-screen bg-background text-foreground flex items-center justify-center font-medium">Loading Laara Innovations...</div>;
-
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "MASTER";
 
   // Get Hero Block Data
@@ -128,16 +126,16 @@ export default function Home() {
         </div>
       )}
 
-      <Navigation customLinks={navLinks} config={config} />
+      <Navigation customLinks={navLinks} config={config} loading={loading} />
 
       {/* Hero Section */}
       <div className="relative group/hero">
-        <HeroSection content={heroContent} />
+        <HeroSection content={heroContent} loading={loading} />
       </div>
 
       {/* Vision Section with Live CMS overlay */}
       <div className="relative group/vision">
-        <VisionSection content={visionContent} />
+        <VisionSection content={visionContent} loading={loading} />
         {isAdmin && (
           <LiveCMSOverlay
             blockType="VISION"

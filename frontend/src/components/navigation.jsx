@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogIn } from "lucide-react";
+import { Menu, X, LogIn, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "@/lib/auth-store";
 import { UserAccountNav } from "./user-account-nav";
@@ -16,7 +16,7 @@ const defaultNavLinks = [
   { href: "/contact", label: "Contact Us" },
 ];
 
-export function Navigation({ customLinks, config }) {
+export function Navigation({ customLinks, config, loading = false }) {
   const links =
     Array.isArray(customLinks) && customLinks.length > 0
       ? customLinks
@@ -103,20 +103,27 @@ export function Navigation({ customLinks, config }) {
 
             {/* Desktop links */}
             <div className="hidden lg:flex items-center gap-12">
-              <div className="flex items-center px-4 py-1.5 rounded-full bg-foreground/5 border border-foreground/10">
-                {resolvedLinks
-                  .filter((l) => l.label !== "Contact Us" && l.label !== "Admin Portal")
-                  .map((link) => (
-                    <Link
-                      key={link.label}
-                      to={link.href}
-                      className="px-6 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 relative group"
-                    >
-                      {link.label}
-                      <span className="absolute bottom-1 left-6 right-6 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-                    </Link>
-                  ))}
-              </div>
+              {loading ? (
+                <div className="flex items-center gap-2 px-6 py-2 bg-foreground/5 rounded-full border border-foreground/10">
+                  <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                  <span className="text-xs text-muted-foreground font-semibold">Loading menu...</span>
+                </div>
+              ) : (
+                <div className="flex items-center px-4 py-1.5 rounded-full bg-foreground/5 border border-foreground/10">
+                  {resolvedLinks
+                    .filter((l) => l.label !== "Contact Us" && l.label !== "Admin Portal")
+                    .map((link) => (
+                      <Link
+                        key={link.label}
+                        to={link.href}
+                        className="px-6 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 relative group"
+                      >
+                        {link.label}
+                        <span className="absolute bottom-1 left-6 right-6 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                      </Link>
+                    ))}
+                </div>
+              )}
 
               <div className="ml-4 flex items-center gap-3">
                 <ThemeToggle />
@@ -192,16 +199,23 @@ export function Navigation({ customLinks, config }) {
 
               {/* Nav links */}
               <div className="flex flex-col gap-1">
-                {resolvedLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="px-4 py-4 text-base font-semibold text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all border border-transparent hover:border-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {loading ? (
+                  <div className="flex items-center gap-2 px-4 py-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <Loader2 className="w-4 h-4 animate-spin text-primary animate-pulse" />
+                    <span className="text-sm text-muted-foreground font-semibold">Loading menu...</span>
+                  </div>
+                ) : (
+                  resolvedLinks.map((link) => (
+                    <Link
+                      key={link.label}
+                      to={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-4 text-base font-semibold text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all border border-transparent hover:border-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      {link.label}
+                    </Link>
+                  ))
+                )}
               </div>
 
               {/* Auth footer */}

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { Lightbulb, Target, Rocket } from "lucide-react";
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Lightbulb, Target, Rocket, Loader2 } from "lucide-react";
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 
-export function VisionSection({ content = {} }) {
+export function VisionSection({ content = {}, loading = false }) {
   const subtitle = content.subtitle || "Our Vision";
   const title = content.title || "Shaping the [Future] of Technology.";
   const p1 = content.p1 || "Our vision is to build a thriving ecosystem where cutting-edge technological innovation and human potential converge. We strive to push the boundaries of what is possible—from engineering future-facing hardware like drones and robotics to crafting tailored digital software solutions that elevate businesses.";
@@ -52,21 +52,30 @@ export function VisionSection({ content = {} }) {
           variants={containerVariants}
           className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
         >
-          {/* Left Column: Text */}
+          {/* Left Column: Text or Loader */}
           <motion.div variants={itemVariants} className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 mb-6">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">{subtitle}</span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-foreground mb-8 leading-[1.1]">
-              {renderFormattedTitle(title)}
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-muted-foreground leading-relaxed font-medium">
-              <p>{p1}</p>
-              <p>{p2}</p>
-            </div>
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 min-h-[300px] select-none">
+                <Loader2 className="w-10 h-10 animate-spin text-secondary mb-4" />
+                <span className="text-sm font-semibold tracking-widest text-muted-foreground animate-pulse uppercase">Syncing Vision Section...</span>
+              </div>
+            ) : (
+              <_Fragment>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 mb-6">
+                  <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">{subtitle}</span>
+                </div>
+                
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-foreground mb-8 leading-[1.1]">
+                  {renderFormattedTitle(title)}
+                </h2>
+                
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-muted-foreground leading-relaxed font-medium">
+                  <p>{p1}</p>
+                  <p>{p2}</p>
+                </div>
+              </_Fragment>
+            )}
           </motion.div>
           
           {/* Right Column: Dynamic Cards */}

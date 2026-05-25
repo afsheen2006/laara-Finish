@@ -14,7 +14,7 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { ConfirmationModal } from "@/components/admin/confirmation-modal";
 
-export default function CareersPage({ navLinks, config }) {
+export default function CareersPage({ navLinks, config, loadingConfig }) {
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "MASTER";
 
@@ -258,7 +258,7 @@ export default function CareersPage({ navLinks, config }) {
 
   return (
     <main className="min-h-screen bg-background text-foreground relative">
-      <Navigation customLinks={navLinks} config={config} />
+      <Navigation customLinks={navLinks} config={config} loading={loadingConfig} />
 
       <div className="pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
         
