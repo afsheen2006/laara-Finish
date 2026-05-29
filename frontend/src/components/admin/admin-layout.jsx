@@ -2,7 +2,7 @@
 import { useState } from "react";
 import {
   Shield, Users, LayoutDashboard, FileText, Activity,
-  Bell, Globe, Mail, Settings, ChevronRight, Briefcase, ClipboardList } from
+  Bell, Globe, Mail, Settings, ChevronRight, Briefcase, ClipboardList, Calendar } from
 "lucide-react";
 import { AdminManagement } from "./admin-management";
 import { LeadManagement } from "./lead-management";

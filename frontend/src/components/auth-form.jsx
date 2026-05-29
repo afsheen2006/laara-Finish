@@ -15,7 +15,7 @@ export function AuthForm() {
       setLoading(true);
       const token = response.credential;
       
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
       // Save Google authenticated user data in database with secure token verification
       const responseBackend = await fetch(`${API_URL}/api/auth/google`, {
         method: "POST",

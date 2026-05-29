@@ -6,7 +6,7 @@ import { OdometerCounter } from "@/components/odometer-counter";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
 
 const getSystemConfig = async () => {
   try {

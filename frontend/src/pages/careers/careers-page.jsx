@@ -212,7 +212,7 @@ export default function CareersPage({ navLinks, config, loadingConfig }) {
       toast.error("No CV file available for this application.");
       return;
     }
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
     const fullUrl = resumeUrl.startsWith("/") ? `${API_URL}${resumeUrl}` : resumeUrl;
     window.open(fullUrl, "_blank");
   };
@@ -225,7 +225,7 @@ export default function CareersPage({ navLinks, config, loadingConfig }) {
     }
 
     const headers = ["Name", "Email", "Mobile", "Interested Role", "Submission Date", "CV Download Url"];
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
 
     const rows = applications.map((app) => [
       app.name || "",

@@ -2,6 +2,7 @@ import { Navigation } from "@/components/navigation";
 import { DroneShowcase } from "@/components/drone-showcase";
 import { ResearchRepository } from "@/components/research-repository";
 import { ProjectTimeline } from "@/components/project-timeline";
+import { CoursesSection } from "@/components/courses-section";
 import { getNavLinks, getSystemConfig, getBlocks } from "@/lib/cms-helpers";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
@@ -112,6 +113,8 @@ export default function DroneRDPage() {
     });
   };
 
+  const coursesBlock = blocks.find(b => b.type === "COURSES_CONFIGURATION");
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation customLinks={navLinks} config={config} loading={loading} />
@@ -166,6 +169,19 @@ export default function DroneRDPage() {
             </div>
           ) : (
             <ProjectTimeline milestones={initialMilestones} isAdmin={isAdmin} onSave={handleSaveMilestones} />
+          )}
+        </div>
+      </section>
+
+      <section id="courses" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="mx-auto max-w-7xl">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-12 min-h-[200px] w-full">
+              <Loader2 className="w-8 h-8 animate-spin text-primary mb-2" />
+              <span className="text-xs text-muted-foreground animate-pulse">Syncing courses...</span>
+            </div>
+          ) : (
+            <CoursesSection coursesBlock={coursesBlock} isAdmin={isAdmin} onSave={refreshPageData} />
           )}
         </div>
       </section>

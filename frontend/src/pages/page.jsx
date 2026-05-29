@@ -12,7 +12,7 @@ import { Navigation } from "@/components/navigation";
 import { useSession } from "@/lib/auth-store";
 import { LiveCMSOverlay } from "@/components/admin/live-cms-overlay";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
 
 const getBlocks = async () => {
   try {

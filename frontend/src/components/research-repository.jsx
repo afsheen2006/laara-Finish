@@ -127,7 +127,7 @@ export function ResearchRepository({ papers = [], isAdmin = false, onSave }) {
 
   const handleDownload = (paper) => {
     if (paper.fileUrl) {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
       const fullUrl = paper.fileUrl.startsWith("/") ? `${API_URL}${paper.fileUrl}` : paper.fileUrl;
       window.open(fullUrl, "_blank");
     } else {

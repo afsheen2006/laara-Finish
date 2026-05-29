@@ -29,7 +29,7 @@ export default function AdminDashboardPage() {
     }
 
     // Check role — must be ADMIN or MASTER
-    if (user.role !== "ADMIN" && user.role !== "MASTER") {
+    if (!user.role || (user.role.toUpperCase() !== "ADMIN" && user.role.toUpperCase() !== "MASTER")) {
       navigate("/");
       return;
     }

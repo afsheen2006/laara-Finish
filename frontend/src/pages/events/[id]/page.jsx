@@ -7,38 +7,6 @@ import { Calendar, MapPin, ChevronLeft, ArrowRight, Sparkles, AlertCircle, Info,
 import { Button } from "@/components/ui/button";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 
-const DUMMY_EVENTS = [
-{
-  id: "1",
-  title: "Drone Tech Summit 2026",
-  date: "June 15-17, 2026",
-  location: "Bengaluru, India",
-  description: "Join us for three days of workshops, keynotes, and hands-on demonstrations showcasing the latest in drone propulsion technology.",
-  detailedDescription: "The Drone Tech Summit 2026 is the premier gathering for engineers, developers, and researchers in the unmanned aerial systems industry. Focus areas for this year's summit include:\n\n- Advanced CFD simulations for quad-blade configurations.\n- Carbon-fiber composite lightweighting and structural optimization.\n- Open-source autopilot integrations (ArduPilot/PX4) with custom hardware.\n- Next-generation electric motor propulsion systems and battery efficiency.\n\nAttendees will have the opportunity to participate in physical testing, network with leaders in aerospace engineering, and witness live propulsion R&D demonstrations from our engineering team.",
-  type: "Conference",
-  image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80&w=2000"
-},
-{
-  id: "2",
-  title: "EdTech Innovation Workshop",
-  date: "July 8, 2026",
-  location: "Virtual Event",
-  description: "A deep dive into AI-powered learning platforms and the future of personalized education. Open to educators and developers.",
-  detailedDescription: "Explore how artificial intelligence is transforming instructional design and student engagement. This interactive online workshop is designed for edtech innovators, curriculum developers, and classroom leaders. Topics covered:\n\n- Designing adaptive learning algorithms and smart recommendation engines.\n- Utilizing LLMs for automated feedback and grading aids.\n- Gamification best practices for student retention.\n- Enhancing accessibility and support for neurodivergent learners.\n\nParticipants will gain access to hands-on programming sandboxes and receive a certificate of completion from Laara Innovations EdTech Division.",
-  type: "Workshop",
-  image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=2000"
-},
-{
-  id: "3",
-  title: "Robotics & AI Expo",
-  date: "September 12, 2026",
-  location: "Hyderabad, India",
-  description: "Exploring the convergence of robotics and artificial intelligence in industrial automation and consumer electronics.",
-  detailedDescription: "The Robotics & AI Expo showcases cutting-edge advancements in hardware automation, robotics systems, and computer vision models. Key exhibition tracks:\n\n- Multi-axis robotic arms for industrial manufacturing.\n- Real-time computer vision and obstacle avoidance protocols.\n- Edge AI deployment for autonomous ground vehicles (AGVs).\n- Consumer robotics and intelligent smart-home assistant products.\n\nMeet startups, research institutions, and corporate innovation divisions exhibiting their prototypes. Hands-on coding zones and system debugging workshops will run hourly.",
-  type: "Expo",
-  image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=2000"
-}];
-
 export default function EventDetailPage() {
   const params = useParams();
   const [cmsEvents, setCmsEvents] = useState([]);
@@ -60,9 +28,7 @@ export default function EventDetailPage() {
     });
   }, []);
 
-  // Combine CMS events with fallback dummy data
-  const events = cmsEvents.length > 0 ? cmsEvents : DUMMY_EVENTS;
-  const event = events.find(e => String(e.id) === String(params.id));
+  const event = cmsEvents.find(e => String(e.id) === String(params.id));
 
   return (
     _jsxs("main", { className: "min-h-screen bg-background text-foreground selection:bg-primary selection:text-black flex flex-col justify-between", children: [
@@ -96,9 +62,22 @@ export default function EventDetailPage() {
             /* Left main details column */
             _jsxs("div", { className: "lg:col-span-2 space-y-8", children: [
               _jsxs("div", { className: "space-y-4", children: [
-                _jsx("span", { className: "px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-black uppercase tracking-widest inline-block", children:
-                  event.type
-                }),
+                _jsxs("div", { className: "flex flex-wrap gap-2 items-center", children: [
+                  _jsx("span", { className: "px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] font-black uppercase tracking-widest inline-block", children:
+                    event.type
+                  }),
+                  (event.timeline && new Date(event.timeline) <= new Date()) ? (
+                    _jsxs("span", { className: "px-4 py-1.5 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 text-[10px] font-black uppercase tracking-widest inline-flex items-center gap-1.5", children: [
+                      _jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-red-400" }),
+                      "Over"
+                    ] })
+                  ) : (
+                    _jsxs("span", { className: "px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-black uppercase tracking-widest inline-flex items-center gap-1.5", children: [
+                      _jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }),
+                      "Upcoming"
+                    ] })
+                  )
+                ] }),
                 _jsx("h1", { className: "text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text text-transparent leading-none", children:
                   event.title
                 })
@@ -108,7 +87,7 @@ export default function EventDetailPage() {
                 _jsx("img", {
                   src: event.image || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
                   alt: event.title,
-                  className: "w-full h-full object-cover"
+                  className: `w-full h-full object-cover transition-all duration-500 ${(event.timeline && new Date(event.timeline) <= new Date()) ? "grayscale contrast-125 opacity-70 hover:grayscale-0" : ""}`
                 })
               }),
 
@@ -120,9 +99,21 @@ export default function EventDetailPage() {
                   event.description
                 }),
                 _jsx("hr", { className: "border-border" }),
-                _jsx("div", { className: "text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap space-y-4 font-medium", children:
-                  event.detailedDescription || "No detailed description has been uploaded yet for this event by the administrator."
-                })
+                (!event.curriculum || event.curriculum.length === 0) && !event.detailedDescription ? (
+                  _jsx("div", { className: "text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap space-y-4 font-medium", children:
+                    "No curriculum or detailed description has been uploaded yet for this event by the administrator."
+                  })
+                ) : (
+                  _jsxs("div", { className: "space-y-6", children: [
+                    event.detailedDescription && _jsx("div", { className: "text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap space-y-4 font-medium", children: event.detailedDescription }),
+                    (event.curriculum || []).map((item, idx) => (
+                      _jsxs("div", { key: idx, className: "space-y-2", children: [
+                        _jsx("h4", { className: "text-lg font-bold text-foreground", children: item.heading }),
+                        _jsx("p", { className: "text-muted-foreground leading-relaxed text-sm font-medium whitespace-pre-wrap", children: item.text })
+                      ] })
+                    ))
+                  ] })
+                )
               ] })
             ] }),
 
@@ -152,11 +143,23 @@ export default function EventDetailPage() {
                 ] }),
                 _jsx("hr", { className: "border-border" }),
                 _jsxs("div", { className: "space-y-3", children: [
-                  _jsx(Link, { to: "/contact", className: "block", children:
-                    _jsxs(Button, { className: "w-full h-14 bg-primary text-black font-black hover:bg-primary/90 rounded-2xl flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]", children: [
-                      "Register Interest", _jsx(ArrowRight, { className: "w-4 h-4" })
-                    ] })
-                  }),
+                  event.gformLink ? (
+                    _jsx("a", { href: event.gformLink.startsWith("http") ? event.gformLink : `https://${event.gformLink}`, target: "_blank", rel: "noopener noreferrer", className: "block", children:
+                      _jsxs(Button, {
+                        disabled: event.timeline ? new Date(event.timeline) <= new Date() : false,
+                        className: "w-full h-14 bg-primary text-black font-black hover:bg-primary/90 rounded-2xl flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:bg-muted disabled:text-muted-foreground cursor-pointer", children: [
+                          (event.timeline && new Date(event.timeline) <= new Date()) ? "Registration Closed" : "Apply Now",
+                          _jsx(ArrowRight, { className: "w-4 h-4" })
+                        ]
+                      })
+                    })
+                  ) : (
+                    _jsx(Link, { to: "/contact", className: "block", children:
+                      _jsxs(Button, { className: "w-full h-14 bg-primary text-black font-black hover:bg-primary/90 rounded-2xl flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]", children: [
+                        "Register Interest", _jsx(ArrowRight, { className: "w-4 h-4" })
+                      ] })
+                    })
+                  ),
                   _jsx(Link, { to: "/contact", className: "block", children:
                     _jsx(Button, { variant: "outline", className: "w-full h-14 border-border hover:bg-muted text-foreground font-bold rounded-2xl", children:
                       "Inquire About Speakers"

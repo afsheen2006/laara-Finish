@@ -47,7 +47,7 @@ export function ApplicationManagement({ applications = [], onRefresh }) {
       return;
     }
     const headers = ["Name", "Email", "Mobile", "Qualification", "Role", "Resume", "Status", "Date"];
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
 
     const rows = applications.map((a) => [
       a.name || "",
@@ -82,7 +82,7 @@ export function ApplicationManagement({ applications = [], onRefresh }) {
 
   const getFullCVUrl = (resumeUrl) => {
     if (!resumeUrl) return "#";
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace("5000", "5001");
     return resumeUrl.startsWith("/") ? `${API_URL}${resumeUrl}` : resumeUrl;
   };
 
