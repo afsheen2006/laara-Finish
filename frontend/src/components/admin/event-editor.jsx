@@ -138,7 +138,7 @@ export function EventEditor({ eventsBlock, onSave }) {
         image: "",
         timeline: "",
         gformLink: "",
-        isFeatured: false,
+        isFeatured: true,
         uploadedByAdmin: true
       }
     ]);
@@ -381,7 +381,9 @@ export function EventEditor({ eventsBlock, onSave }) {
                       _jsx("option", { value: "Workshop", children: "Workshop" }),
                       _jsx("option", { value: "Expo", children: "Expo" }),
                       _jsx("option", { value: "Summit", children: "Summit" }),
-                      _jsx("option", { value: "Webinar", children: "Webinar" })
+                      _jsx("option", { value: "Webinar", children: "Webinar" }),
+                      _jsx("option", { value: "Hackathon", children: "Hackathon" }),
+                      _jsx("option", { value: "Other", children: "Other" })
                     ]
                   })
                 ] }),

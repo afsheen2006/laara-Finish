@@ -99,12 +99,18 @@ export default function EventsPage() {
   
   // Sort upcoming events: soonest first
   const upcomingEvents = cmsEvents
-    .filter((e) => e.timeline && new Date(e.timeline) > now)
-    .sort((a, b) => new Date(a.timeline) - new Date(b.timeline));
+    .filter((e) => !e.timeline || new Date(e.timeline) > now)
+    .sort((a, b) => {
+      // Put events without a timeline at the TOP
+      if (!a.timeline && !b.timeline) return 0;
+      if (!a.timeline) return -1;
+      if (!b.timeline) return 1;
+      return new Date(a.timeline) - new Date(b.timeline);
+    });
 
   // Sort past events: most recently ended first
   const pastEvents = cmsEvents
-    .filter((e) => !e.timeline || new Date(e.timeline) <= now)
+    .filter((e) => e.timeline && new Date(e.timeline) <= now)
     .sort((a, b) => new Date(b.timeline) - new Date(a.timeline));
 
   const renderEventCard = (event, isOver) => {
@@ -185,19 +191,19 @@ export default function EventsPage() {
                 ] })
               ] })
             ] }),
-            _jsxs("div", { className: "flex flex-col sm:flex-row gap-3 w-full mt-4", children: [
-              _jsx(Link, { to: `/events/${event.id}`, className: "flex-1", children:
-                _jsx(Button, { variant: "outline", className: "w-full h-14 rounded-2xl border border-border hover:bg-muted font-bold text-sm", children: "Read More" })
-              }),
+            _jsxs("div", { className: "flex flex-col gap-3 w-full mt-4", children: [
               event.gformLink && (
-                _jsx("a", { href: event.gformLink.startsWith("http") ? event.gformLink : `https://${event.gformLink}`, target: "_blank", rel: "noopener noreferrer", className: "flex-1", children:
+                _jsx("a", { href: event.gformLink.startsWith("http") ? event.gformLink : `https://${event.gformLink}`, target: "_blank", rel: "noopener noreferrer", className: "w-full", children:
                   _jsx(Button, {
                     disabled: isOver,
                     className: "w-full h-14 rounded-2xl bg-primary text-black hover:bg-primary/90 disabled:opacity-50 disabled:bg-muted disabled:text-muted-foreground font-bold text-sm cursor-pointer", children:
                       isOver ? "Registration Closed" : "Apply Now"
                   })
                 })
-              )
+              ),
+              _jsx(Link, { to: `/events/${event.id}`, className: "w-full", children:
+                _jsx(Button, { variant: "outline", className: "w-full h-14 rounded-2xl border border-border hover:bg-muted font-bold text-sm", children: "Read More" })
+              })
             ] })
           ] })
         ]

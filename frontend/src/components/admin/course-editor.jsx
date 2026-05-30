@@ -115,6 +115,7 @@ export function CourseEditor({ coursesBlock, onSave }) {
         id: Math.random().toString(36).substr(2, 9),
         title: "New Course",
         description: "Course short description...",
+        detailedDescription: "",
         image: "",
         startDate: "",
         date: "",
@@ -240,10 +241,20 @@ export function CourseEditor({ coursesBlock, onSave }) {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Short Description</label>
-                    <Textarea
+                    <textarea
                       value={course.description}
                       onChange={(e) => updateCourse(course.id, { description: e.target.value })}
-                      className="bg-background border-border min-h-[80px]"
+                      className="w-full h-24 bg-background/50 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors resize-none"
+                      placeholder="Short summary for the card..."
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Detailed Description</label>
+                    <textarea
+                      value={course.detailedDescription || ""}
+                      onChange={(e) => updateCourse(course.id, { detailedDescription: e.target.value })}
+                      className="w-full h-32 bg-background/50 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors resize-none"
+                      placeholder="Long description for the read more page..."
                     />
                   </div>
 

@@ -17,7 +17,13 @@ try {
 }
 
 app.use(cors({
-  origin: frontendOrigin,
+  origin: function (origin, callback) {
+    if (!origin || frontendOrigin === origin || origin.match(/^http:\/\/(localhost|127\.0\.0\.1):\d+$/)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 app.use(express.json());

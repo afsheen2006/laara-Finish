@@ -2,7 +2,7 @@ const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replac
 
 export const getSystemConfig = async () => {
   try {
-    const res = await fetch(`${API_URL}/api/cms/config`);
+    const res = await fetch(`${API_URL}/api/cms/config?t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error("Failed to fetch config");
     return await res.json();
   } catch (e) {
@@ -13,7 +13,7 @@ export const getSystemConfig = async () => {
 
 export const getNavLinks = async () => {
   try {
-    const res = await fetch(`${API_URL}/api/cms/blocks`);
+    const res = await fetch(`${API_URL}/api/cms/blocks?t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error("Failed to fetch blocks");
     const blocks = await res.json();
     const navBlock = blocks.find(b => b.type === "NAV_LINKS");
@@ -26,7 +26,7 @@ export const getNavLinks = async () => {
 
 export const getBlocks = async () => {
   try {
-    const res = await fetch(`${API_URL}/api/cms/blocks`);
+    const res = await fetch(`${API_URL}/api/cms/blocks?t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error("Failed to fetch blocks");
     return await res.json();
   } catch (e) {

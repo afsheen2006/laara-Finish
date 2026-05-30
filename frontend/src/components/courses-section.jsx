@@ -88,13 +88,22 @@ export function CoursesSection({ coursesBlock, isAdmin, onSave }) {
 
           {localCourses.map((course) => (
             <div key={course.id} className="group relative flex flex-col rounded-[2.5rem] glass-card overflow-hidden hover:border-primary/50 transition-all duration-500">
-              <div className="aspect-[16/10] overflow-hidden relative">
+              <div className="aspect-[16/10] overflow-hidden relative bg-black/20 flex items-center justify-center">
+                {/* Blurred background */}
+                <div className="absolute inset-0 w-full h-full z-0">
+                  <img
+                    src={course.image || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"}
+                    alt=""
+                    className="w-full h-full object-cover blur-2xl opacity-60 scale-150"
+                  />
+                </div>
+                {/* Main Image */}
                 <img
                   src={course.image || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"}
                   alt={course.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-contain relative z-10 transition-transform duration-700 group-hover:scale-110 drop-shadow-2xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
                 
                 {isAdmin && (
                   <div className="absolute top-6 right-6 flex gap-2 z-20">
@@ -159,50 +168,13 @@ export function CoursesSection({ coursesBlock, isAdmin, onSave }) {
                     )}
                   </div>
                 </div>
-
-                {(course.curriculum && course.curriculum.length > 0) && (
-                  <div className="w-full mt-4 mb-4">
-                    <button
-                      onClick={() => setExpandedCourseId(expandedCourseId === course.id ? null : course.id)}
-                      className="w-full flex items-center justify-between p-4 rounded-2xl bg-muted/50 hover:bg-muted border border-border transition-colors text-sm font-bold text-foreground cursor-pointer"
-                    >
-                      <span>Course Curriculum</span>
-                      <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${expandedCourseId === course.id ? "rotate-90" : ""}`} />
-                    </button>
-                    <AnimatePresence>
-                      {expandedCourseId === course.id && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="p-4 mt-2 space-y-4 border border-border/50 rounded-2xl bg-background/50">
-                            {course.curriculum.map((item, idx) => (
-                              <div key={idx} className="space-y-1">
-                                <h4 className="font-bold text-foreground text-sm flex items-center gap-2">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                  {item.heading}
-                                </h4>
-                                <p className="text-muted-foreground text-xs pl-3.5 leading-relaxed whitespace-pre-wrap">
-                                  {item.text}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                )}
-
-                <div className="w-full mt-auto pt-4">
+                <div className="w-full mt-auto pt-4 flex flex-col gap-3">
                   {course.gformLink ? (
                     <a
                       href={course.gformLink.startsWith("http") ? course.gformLink : `https://${course.gformLink}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block"
+                      className="w-full"
                     >
                       <Button
                         className="w-full h-14 rounded-2xl bg-primary text-black hover:bg-primary/90 font-bold text-sm cursor-pointer"
@@ -213,7 +185,7 @@ export function CoursesSection({ coursesBlock, isAdmin, onSave }) {
                   ) : (
                     <a
                       href="/contact"
-                      className="block"
+                      className="w-full"
                     >
                       <Button
                         className="w-full h-14 rounded-2xl bg-primary text-black hover:bg-primary/90 font-bold text-sm cursor-pointer"
@@ -222,6 +194,11 @@ export function CoursesSection({ coursesBlock, isAdmin, onSave }) {
                       </Button>
                     </a>
                   )}
+                  <a href={`/edutech/course/${course.id}`} className="w-full">
+                    <Button variant="outline" className="w-full h-14 rounded-2xl border border-border hover:bg-muted font-bold text-sm">
+                      Read More
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>

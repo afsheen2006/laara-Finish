@@ -149,7 +149,11 @@ export default function Home() {
         )}
       </div>
 
-      <EventsSection />
+      <EventsSection 
+        eventsBlock={blocks.find(b => b.type === "TEXT_BLOCK" && b.title === "Global Events Configuration")} 
+        isAdmin={isAdmin} 
+        onSave={refreshPageData} 
+      />
 
       <SegmentsSection />
       <PortfolioGrid />

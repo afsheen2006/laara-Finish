@@ -63,7 +63,26 @@ export default function DroneRDPage() {
   ];
 
   const handleSavePapers = async (newPapers) => {
-    if (!papersBlock) return;
+    if (!papersBlock) {
+      try {
+        const response = await apiClient.post("/cms/blocks", {
+          type: "RESEARCH_PAPERS",
+          title: "Research Papers",
+          content: JSON.stringify(newPapers),
+          order: 10
+        });
+        if (response.data?.success) {
+          toast.success("Research Repository initialized and updated!");
+          refreshPageData();
+        } else {
+          toast.error("Failed to initialize papers");
+        }
+      } catch (e) {
+        toast.error("An error occurred: " + (e.message || "Unknown error"));
+      }
+      return;
+    }
+
     try {
       const response = await apiClient.put(`/cms/blocks/${papersBlock._id || papersBlock.id}`, {
         content: JSON.stringify(newPapers),
