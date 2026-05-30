@@ -184,8 +184,8 @@ export function CoursesSection({ coursesBlock, isAdmin, onSave }) {
                       </Button>
                     </a>
                   ) : (
-                    <a
-                      href="/contact"
+                    <Link
+                      to="/contact"
                       className="w-full"
                     >
                       <Button
@@ -193,13 +193,13 @@ export function CoursesSection({ coursesBlock, isAdmin, onSave }) {
                       >
                         Register Interest
                       </Button>
-                    </a>
+                    </Link>
                   )}
-                  <a href={`/edutech/course/${course.id}`} className="w-full">
+                  <Link to={`/edutech/course/${course.id}`} className="w-full">
                     <Button variant="outline" className="w-full h-14 rounded-2xl border border-border hover:bg-muted font-bold text-sm">
                       Read More
                     </Button>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
