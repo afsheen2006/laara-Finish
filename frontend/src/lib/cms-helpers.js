@@ -1,5 +1,13 @@
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace('5000', '5001');
 
+export const resolveImageUrl = (url) => {
+  if (!url) return url;
+  if (url.startsWith('/uploads')) {
+    return `${API_URL}${url}`;
+  }
+  return url;
+};
+
 export const getSystemConfig = async () => {
   try {
     const res = await fetch(`${API_URL}/api/cms/config?t=${Date.now()}`, { cache: 'no-store' });

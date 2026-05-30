@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Save, Calendar, Plus, Trash2, MapPin, Type, Image as ImageIcon, Upload, Link as LinkIcon, Clock } from "lucide-react";
 import apiClient from "@/lib/api-client";
+import { resolveImageUrl } from "@/lib/cms-helpers";
 
 const updateBlock = async (id, data) => {
   const response = await apiClient.put(`/cms/blocks/${id}`, data);
@@ -427,7 +428,7 @@ export function EventEditor({ eventsBlock, onSave }) {
 
                 event.image &&
                 _jsx("div", { className: "relative aspect-video rounded-2xl overflow-hidden border border-white/10 mt-4", children:
-                  _jsx("img", { src: event.image, alt: "Preview", className: "w-full h-full object-cover" })
+                  _jsx("img", { src: resolveImageUrl(event.image), alt: "Preview", className: "w-full h-full object-cover" })
                 })
               ] })
             ] })

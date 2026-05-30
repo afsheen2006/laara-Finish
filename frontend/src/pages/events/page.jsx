@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { getBlocks, getNavLinks, getSystemConfig } from "@/lib/cms-helpers";
+import { getBlocks, getNavLinks, getSystemConfig, resolveImageUrl } from "@/lib/cms-helpers";
 import { Calendar, MapPin, ArrowRight, Sparkles, Edit, X, Loader2, Plus, Trash2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -121,7 +121,7 @@ export default function EventsPage() {
         }`, children: [
           _jsxs("div", { className: "aspect-[16/10] overflow-hidden relative", children: [
             _jsx("img", {
-              src: event.image || event.poster || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
+              src: resolveImageUrl(event.image) || resolveImageUrl(event.poster) || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
               alt: event.title,
               className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             }),

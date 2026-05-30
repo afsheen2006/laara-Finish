@@ -75,7 +75,7 @@ export function ResearchRepository({ papers = [], isAdmin = false, onSave }) {
     try {
       const response = await apiClient.post("/cms/upload", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": undefined, // Let Axios auto-generate boundary
         },
       });
 

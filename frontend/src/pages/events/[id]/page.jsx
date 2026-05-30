@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { getEvents, getNavLinks, getSystemConfig } from "@/lib/cms-helpers";
+import { getEvents, getNavLinks, getSystemConfig, resolveImageUrl } from "@/lib/cms-helpers";
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Calendar, MapPin, ChevronLeft, ArrowRight, Sparkles, AlertCircle, Info, Loader2 } from "lucide-react";
@@ -85,7 +85,7 @@ export default function EventDetailPage() {
 
               _jsx("div", { className: "aspect-video rounded-[2.5rem] overflow-hidden border border-border bg-muted relative", children:
                 _jsx("img", {
-                  src: event.image || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
+                  src: resolveImageUrl(event.image) || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000",
                   alt: event.title,
                   className: `w-full h-full object-cover transition-all duration-500 ${(event.timeline && new Date(event.timeline) <= new Date()) ? "grayscale contrast-125 opacity-70 hover:grayscale-0" : ""}`
                 })

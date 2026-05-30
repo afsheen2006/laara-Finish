@@ -28,6 +28,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
+const path = require('path');
+const uploadDir = path.join(__dirname, '../frontend/public/uploads');
+app.use('/uploads', express.static(uploadDir));
+
 // ── Request Logger ────────────────────────────────────────────────────────────
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import apiClient from "@/lib/api-client";
+import { resolveImageUrl } from "@/lib/cms-helpers";
 
 export function CourseEditor({ coursesBlock, onSave }) {
   const [courses, setCourses] = useState(() => {
@@ -294,7 +295,7 @@ export function CourseEditor({ coursesBlock, onSave }) {
                     <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Course Image</label>
                     <div className="flex items-center gap-3">
                       {course.image ? (
-                        <img src={course.image} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-border" />
+                        <img src={resolveImageUrl(course.image)} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-border" />
                       ) : (
                         <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center border border-border">
                           <Image className="w-4 h-4 text-muted-foreground" />

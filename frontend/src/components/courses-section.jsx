@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { CourseEditor } from "@/components/admin/course-editor";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { resolveImageUrl } from "@/lib/cms-helpers";
 import apiClient from "@/lib/api-client";
 import { toast } from "sonner";
 
@@ -92,14 +93,14 @@ export function CoursesSection({ coursesBlock, isAdmin, onSave }) {
                 {/* Blurred background */}
                 <div className="absolute inset-0 w-full h-full z-0">
                   <img
-                    src={course.image || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"}
+                    src={resolveImageUrl(course.image) || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"}
                     alt=""
                     className="w-full h-full object-cover blur-2xl opacity-60 scale-150"
                   />
                 </div>
                 {/* Main Image */}
                 <img
-                  src={course.image || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"}
+                  src={resolveImageUrl(course.image) || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"}
                   alt={course.title}
                   className="w-full h-full object-contain relative z-10 transition-transform duration-700 group-hover:scale-110 drop-shadow-2xl"
                 />

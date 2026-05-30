@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { getNavLinks, getSystemConfig, getBlocks } from "@/lib/cms-helpers";
+import { getNavLinks, getSystemConfig, getBlocks, resolveImageUrl } from "@/lib/cms-helpers";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Calendar, Clock, MapPin, ArrowRight, Loader2, Info, BookOpen } from "lucide-react";
 import { Link } from 'react-router-dom';
@@ -78,7 +78,7 @@ export default function CourseDetailPage() {
 
               <div className="aspect-video rounded-[2.5rem] overflow-hidden border border-border bg-muted relative">
                 <img
-                  src={course.image || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=2000&q=80"}
+                  src={resolveImageUrl(course.image) || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=2000&q=80"}
                   alt={course.title}
                   className="w-full h-full object-cover transition-all duration-500"
                 />

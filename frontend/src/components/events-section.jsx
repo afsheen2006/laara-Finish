@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, ArrowRight, Loader2, Clock, Plus, Edit, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getEvents } from "@/lib/cms-helpers";
+import { getEvents, resolveImageUrl } from "@/lib/cms-helpers";
 import { useState, useEffect } from "react";
 import { EventEditor } from "@/components/admin/event-editor";
 import apiClient from "@/lib/api-client";
@@ -86,7 +86,7 @@ export function EventsSection({ eventsBlock, isAdmin, onSave }) {
   const displayedEvents = activeEvents.slice(0, 4);
 
   return (
-    _jsx("section", { className: "relative py-12 sm:py-20 border-t border-border/30 bg-gradient-to-b from-transparent to-muted/10", children:
+    _jsxs("section", { className: "relative py-12 sm:py-20 border-t border-border/30 bg-gradient-to-b from-transparent to-muted/10", children: [
       _jsx("div", { className: "mx-auto max-w-6xl px-4 sm:px-6 lg:px-8", children:
         _jsxs(motion.div, {
           initial: { opacity: 0, y: 20 },
@@ -209,10 +209,10 @@ export function EventsSection({ eventsBlock, isAdmin, onSave }) {
                       /* Poster Image */
                       event.image && _jsxs("div", { className: "aspect-[16/9] w-full rounded-2xl overflow-hidden mb-6 border border-border/20 relative bg-black/20 flex items-center justify-center", children: [
                         _jsx("div", { className: "absolute inset-0 w-full h-full z-0", children:
-                          _jsx("img", { src: event.image, alt: "", className: "w-full h-full object-cover blur-2xl opacity-60 scale-150" })
+                          _jsx("img", { src: resolveImageUrl(event.image), alt: "", className: "w-full h-full object-cover blur-2xl opacity-60 scale-150" })
                         }),
                         _jsx("img", {
-                          src: event.image,
+                          src: resolveImageUrl(event.image),
                           alt: event.title,
                           className: "w-full h-full object-contain relative z-10 transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl"
                         })

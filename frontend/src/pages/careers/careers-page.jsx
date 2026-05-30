@@ -168,7 +168,7 @@ export default function CareersPage({ navLinks, config, loadingConfig }) {
     try {
       const res = await apiClient.post("/careers/apply", formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": undefined // Let Axios auto-generate boundary
         }
       });
       if (res.data?.success) {

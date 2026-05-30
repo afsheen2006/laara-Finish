@@ -41,7 +41,7 @@ export function LiveCMSOverlay({
     try {
       const response = await apiClient.post("/cms/upload", uploadData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": undefined, // Let Axios auto-generate boundary
         },
       });
 
